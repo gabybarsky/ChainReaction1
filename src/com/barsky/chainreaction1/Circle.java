@@ -17,6 +17,8 @@ public class Circle {
 	public boolean cleared;
 	boolean collision;
 	public float littleRadius = 10;
+	public int xPlusMinus = rnd.nextInt(2);
+	public int yPlusMinus = rnd.nextInt(2);
 	
 	public Circle() {
 		this.xPos = rnd.nextInt(MainActivity.xmax - 15);
@@ -31,6 +33,8 @@ public class Circle {
 			this.xPos = rnd.nextInt(MainActivity.xmax-15);
 			this.yPos = rnd.nextInt(MainActivity.ymax-15);
 		}
+		if (xPlusMinus==1) { xVelocity = -xVelocity; }
+		if (yPlusMinus==1) { yVelocity = -yVelocity; }
 	}
 	
 	public void Move() {
