@@ -16,10 +16,10 @@ public class TouchCircle extends Circle {
 	
 	//check collision with little circles
 	public void collision(Circle circle) {
-		double xDif = circle.xPos - xPos;
-		double yDif = yPos - circle.yPos;
+		double xDif = circle.xPos - this.xPos;
+		double yDif = circle.yPos - this.yPos;
 		double dist = xDif*xDif + yDif*yDif;
-		collision = dist < (r*circle.r) + (r*circle.r);
+		collision = dist < (this.r+circle.r) * (this.r+circle.r);
 		
 		if (collision) {
 			circle.xVelocity = 0;
