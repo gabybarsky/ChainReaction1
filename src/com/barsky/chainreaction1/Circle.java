@@ -14,6 +14,7 @@ public class Circle {
 	public float r;
 	public float xVelocity, yVelocity;
 	public int color;
+	public boolean cleared;
 	boolean collision;
 	public float littleRadius = 10;
 	
@@ -24,6 +25,7 @@ public class Circle {
 		this.yVelocity = rnd.nextFloat()*6;
 		this.r = 10;
 		this.color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+		this.cleared = false;
 	
 		while (xPos-r <= 0 || yPos-r <= 0) {
 			this.xPos = rnd.nextInt(MainActivity.xmax-15);
@@ -66,6 +68,10 @@ public class Circle {
 				circle.xVelocity = 0;
 				circle.yVelocity = 0;
 				circle.r = r;
+				if(!circle.cleared) {
+					MyView.clear += 1;
+					circle.cleared = true;
+				}
 			}
 		}
 	}

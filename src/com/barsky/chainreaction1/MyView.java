@@ -21,10 +21,11 @@ public class MyView  extends View {
 	Circle circle2;
 	Circle circle3;
 	TouchCircle touchCircle;
-	int level = 1;
-	int clearLevel;
-	int num = 6;
-	int clear = 0;
+	public int level = 0;
+	public int[] num = {5,10,15,20,25,30,35,40,45,50,55,60};
+	public int[] clearLevel = {1,2,4,6,10,15,18,22,30,37,48,55};
+	public static int clear = 0;
+	public static int touchRadius = 80;
 	boolean startLevel = true;
 	boolean touched = false;
 	ArrayList<Circle> circles = new ArrayList<Circle>();
@@ -54,14 +55,27 @@ public class MyView  extends View {
 		paint.setTextSize(20);
 	}
 	
-	public void createLevel() {
+	public void level() {
 		
 		if(startLevel)
 		{
-			for (int i=0; i<=num; i++) {
+			for (int i=0; i<=num[level]; i++) {
 				circles.add(new Circle());
 			}
 			startLevel = false;
+		} else {
+			if(clear >= clearLevel[level]) {
+				circles.clear();
+				touched = false;
+				startLevel = true;
+				clear = 0;
+				if(level >= num.length - 1) {
+					level = 0;
+					touchRadius -= 10;
+				} else {
+					level += 1;
+				}
+			}
 		}
 		
 	}
@@ -82,7 +96,7 @@ public class MyView  extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		createLevel();
+		level();
 
 		iterator1 = circles.iterator();
 		while(iterator1.hasNext()) {
