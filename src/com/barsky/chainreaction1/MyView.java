@@ -2,6 +2,7 @@ package com.barsky.chainreaction1;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 import android.content.Context;
@@ -27,7 +28,8 @@ public class MyView  extends View {
 	boolean startLevel = true;
 	boolean touched = false;
 	ArrayList<Circle> circles = new ArrayList<Circle>();
-	Iterator<Circle> iterator;
+	Iterator<Circle> iterator1, iterator2;
+	Circle prevCircle, newCircle;
 	
 	
 	public MyView(Context context) {
@@ -82,16 +84,30 @@ public class MyView  extends View {
 		super.onDraw(canvas);
 		createLevel();
 
-		iterator = circles.iterator();
-		while(iterator.hasNext()) {
-			iterator.next().drawCircle(canvas);
+		iterator1 = circles.iterator();
+		while(iterator1.hasNext()) {
+			iterator1.next().drawCircle(canvas);
 		}
 		
 		if(touched) {
 			touchCircle.drawCircle(canvas);
-			iterator = circles.iterator();
-			while(iterator.hasNext()) {
-				touchCircle.collision(iterator.next());
+			iterator1 = circles.iterator();
+			while(iterator1.hasNext()) {
+				prevCircle = iterator1.next();
+				touchCircle.collision(prevCircle);
+				iterator2 = circles.iterator();
+				while(iterator2.hasNext()) {
+					newCircle = iterator2.next();
+					if(prevCircle != newCircle) {
+						try {
+							newCircle.collision(prevCircle);
+						} catch(IllegalArgumentException e) {
+							continue;
+						} catch(NoSuchElementException e) {
+							continue;
+						}
+					}
+				}
 			}
 		}
 		

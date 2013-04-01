@@ -14,6 +14,8 @@ public class Circle {
 	public float r;
 	public float xVelocity, yVelocity;
 	public int color;
+	boolean collision;
+	public float littleRadius = 10;
 	
 	public Circle() {
 		this.xPos = rnd.nextInt(MainActivity.xmax - 15);
@@ -52,5 +54,19 @@ public class Circle {
 		canvas.drawCircle(xPos, yPos, r, MyView.paint);
 	}
 	
-	
+	//check collision with little circles
+	public void collision(Circle circle) {
+		if (r > littleRadius) {
+			double xDif = circle.xPos - this.xPos;
+			double yDif = circle.yPos - this.yPos;
+			double dist = xDif*xDif + yDif*yDif;
+			collision = dist < (this.r+circle.r) * (this.r+circle.r);
+			
+			if (collision) {
+				circle.xVelocity = 0;
+				circle.yVelocity = 0;
+				circle.r = r;
+			}
+		}
+	}
 }
