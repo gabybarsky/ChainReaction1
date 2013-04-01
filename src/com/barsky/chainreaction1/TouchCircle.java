@@ -8,7 +8,7 @@ public class TouchCircle extends Circle {
 	public TouchCircle(float xPos, float yPos) {
 		this.xVelocity = 0;
 		this.yVelocity = 0;
-		this.r = 60;
+		this.r = 100;
 		this.color = Color.GRAY;
 		this.xPos = xPos;
 		this.yPos = yPos;
