@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
@@ -27,7 +28,7 @@ public class MyView  extends View {
 	public static int clear = 0;
 	public static int touchRadius = 60;
 	boolean startLevel = true;
-	boolean touched, popup, added = false;
+	boolean touched, popup, added, canvasBlack = false;
 	ArrayList<Circle> remove = new ArrayList<Circle>();
 	ArrayList<Circle> circles = new ArrayList<Circle>();
 	Iterator<Circle> iterator1, iterator2;
@@ -89,10 +90,11 @@ public class MyView  extends View {
 				touched = false;
 				clear = 0;
 				levelText = 1;
+				touchRadius = 60;
 			}
 		});
 		losePop.setTitle("Too bad, You Lose!");
-		losePop.setMessage("Play Again?");
+		losePop.setMessage("Play Again?\nYour Score: "+Circle.totalScore.gameScore);
 		losePop.show();
 	}
 	public void level() {
@@ -110,7 +112,7 @@ public class MyView  extends View {
 			}
 			startLevel = false;
 		} else {
-			if(clear >= clearLevel[level]) {
+			if(clear >= clearLevel[level] && hasLost()) {
 				startLevel = true;
 				added = false;
 				touched = false;
@@ -203,9 +205,14 @@ public class MyView  extends View {
 		} return false;
 	}
 	
-	public void Lost() {
-		if (hasLost()) {
+	public void Lost(Canvas canvas) {
+		if (hasLost() && clear < clearLevel[level]) {
+			canvas.drawColor(Color.BLACK);
+			canvasBlack = true;
 			losePopup();
+		} else if (canvasBlack == true ){ 
+			canvas.drawColor(Color.WHITE); 
+			canvasBlack = false; 
 		}
 	}
 	
@@ -216,7 +223,7 @@ public class MyView  extends View {
 		level();
 		drawCircles(canvas);
 		checkCollision(canvas);
-		Lost();
+		Lost(canvas);
 		
 		invalidate();
 	}

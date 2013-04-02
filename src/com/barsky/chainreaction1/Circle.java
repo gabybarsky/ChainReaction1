@@ -1,5 +1,6 @@
 package com.barsky.chainreaction1;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 import android.graphics.Canvas;
@@ -13,14 +14,16 @@ public class Circle {
 	public float yPos;
 	public float r;
 	public float xVelocity, yVelocity;
+	long score, multiplier;
 	public int color;
 	public long time, elapsedTime;
-	public long allowedTime = 1500; // 1.5sec
+	public long allowedTime = 2000; // 2sec
 	public boolean cleared;
 	boolean collision;
 	public static float littleRadius = 10;
 	public int xPlusMinus = rnd.nextInt(2);
 	public int yPlusMinus = rnd.nextInt(2);
+	public static Score totalScore = new Score();
 	
 	public Circle() {
 		this.xPos = rnd.nextInt(MainActivity.xmax - 15);
@@ -28,6 +31,7 @@ public class Circle {
 		this.xVelocity = rnd.nextFloat()*6;
 		this.yVelocity = rnd.nextFloat()*6;
 		this.r = 10;
+		this.score = 0;
 		this.color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
 		this.cleared = false;
 	
@@ -60,8 +64,13 @@ public class Circle {
 		Update();
 		MyView.paint.setColor(color);
 		canvas.drawCircle(xPos, yPos, r, MyView.paint);
+		if(cleared) {
+			MyView.paint.setColor(Color.BLACK);
+			String scoreStr = new DecimalFormat("#").format(score);
+			canvas.drawText("+"+scoreStr, xPos, yPos, MyView.paint);
+		}
 	}
-	
+
 	public boolean drawableCircle() {
 		elapsedTime = System.currentTimeMillis() - time;
 		if(elapsedTime >= allowedTime && r > littleRadius) {
@@ -86,6 +95,13 @@ public class Circle {
 					MyView.clear += 1;
 					circle.cleared = true;
 					circle.time = System.currentTimeMillis();
+					multiplier = score/100;
+					if(multiplier > 0) {
+						circle.score = score + 100 * multiplier;
+					} else {
+						circle.score = score + 100;
+					}
+					totalScore.addToScore(score);
 				}
 			}
 		}
