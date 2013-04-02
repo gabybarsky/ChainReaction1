@@ -12,5 +12,6 @@ public class TouchCircle extends Circle {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.cleared = true;
+		this.time = System.currentTimeMillis();
 	}
 }

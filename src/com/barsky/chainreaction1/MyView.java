@@ -27,7 +27,8 @@ public class MyView  extends View {
 	public static int clear = 0;
 	public static int touchRadius = 80;
 	boolean startLevel = true;
-	boolean touched, popup = false;
+	boolean touched, popup, added = false;
+	ArrayList<Circle> remove = new ArrayList<Circle>();
 	ArrayList<Circle> circles = new ArrayList<Circle>();
 	Iterator<Circle> iterator1, iterator2;
 	Circle prevCircle, newCircle;
@@ -87,8 +88,9 @@ public class MyView  extends View {
 			startLevel = false;
 		} else {
 			if(clear >= clearLevel[level]) {
-				touched = false;
 				startLevel = true;
+				added = false;
+				touched = false;
 				clear = 0;
 				levelText += 1;
 				if(level >= num.length - 1) {
@@ -115,22 +117,41 @@ public class MyView  extends View {
 		return true;
 	}
 	
-	@Override
-	public void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-		level();
-
+	public void drawCircles(Canvas canvas) {
 		iterator1 = circles.iterator();
 		while(iterator1.hasNext()) {
-			iterator1.next().drawCircle(canvas);
+			newCircle = iterator1.next();
+			newCircle.drawCircle(canvas);
+			circleDrawable(newCircle);
 		}
+		removeCircles();
 		
+		if(touched && !added) {
+			circles.add(touchCircle);
+			added = true;;
+		}
+	}
+	
+	public void circleDrawable(Circle circle) {
+		if(!circle.drawableCircle()) {
+			remove.add(circle);
+		}
+	}
+	
+	public void removeCircles() {
+		iterator1 = remove.iterator();
+		while(iterator1.hasNext()) {
+			circles.remove(iterator1.next());
+		}
+		remove.clear();
+	}
+	
+	public void checkCollision(Canvas canvas) {
 		if(touched) {
-			touchCircle.drawCircle(canvas);
 			iterator1 = circles.iterator();
 			while(iterator1.hasNext()) {
 				prevCircle = iterator1.next();
-				touchCircle.collision(prevCircle);
+				//touchCircle.collision(prevCircle);
 				iterator2 = circles.iterator();
 				while(iterator2.hasNext()) {
 					newCircle = iterator2.next();
@@ -146,6 +167,15 @@ public class MyView  extends View {
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		
+		level();
+		drawCircles(canvas);
+		checkCollision(canvas);
 		
 		invalidate();
 	}

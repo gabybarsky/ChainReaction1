@@ -14,6 +14,8 @@ public class Circle {
 	public float r;
 	public float xVelocity, yVelocity;
 	public int color;
+	public long time, elapsedTime;
+	public long allowedTime = 1500; // 1.5sec
 	public boolean cleared;
 	boolean collision;
 	public float littleRadius = 10;
@@ -60,6 +62,14 @@ public class Circle {
 		canvas.drawCircle(xPos, yPos, r, MyView.paint);
 	}
 	
+	public boolean drawableCircle() {
+		elapsedTime = System.currentTimeMillis() - time;
+		if(elapsedTime >= allowedTime && r > littleRadius) {
+			return false;
+		}
+		return true;
+	}
+	
 	//check collision with little circles
 	public void collision(Circle circle) {
 		if (r > littleRadius) {
@@ -75,6 +85,7 @@ public class Circle {
 				if(!circle.cleared) {
 					MyView.clear += 1;
 					circle.cleared = true;
+					circle.time = System.currentTimeMillis();
 				}
 			}
 		}
