@@ -18,7 +18,7 @@ public class Circle {
 	public long allowedTime = 1500; // 1.5sec
 	public boolean cleared;
 	boolean collision;
-	public float littleRadius = 10;
+	public static float littleRadius = 10;
 	public int xPlusMinus = rnd.nextInt(2);
 	public int yPlusMinus = rnd.nextInt(2);
 	

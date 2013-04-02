@@ -25,7 +25,7 @@ public class MyView  extends View {
 	public int[] num = {5,10,15,20,25,30,35,40,45,50,55,60};
 	public int[] clearLevel = {1,2,4,6,10,15,18,22,30,37,48,55};
 	public static int clear = 0;
-	public static int touchRadius = 80;
+	public static int touchRadius = 60;
 	boolean startLevel = true;
 	boolean touched, popup, added = false;
 	ArrayList<Circle> remove = new ArrayList<Circle>();
@@ -33,6 +33,7 @@ public class MyView  extends View {
 	Iterator<Circle> iterator1, iterator2;
 	Circle prevCircle, newCircle;
 	AlertDialog levelPop = new AlertDialog.Builder(getContext()).create();
+	AlertDialog losePop = new AlertDialog.Builder(getContext()).create();
 	String message;
 	
 	public MyView(Context context) {
@@ -73,6 +74,27 @@ public class MyView  extends View {
 		});
 		popup =  true;
 	}
+	
+	public void losePopup() {
+		losePop.setCanceledOnTouchOutside(false);
+		losePop.setCancelable(false);
+		losePop.setButton(-1, "OK", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				level = 0;
+				startLevel = true;
+				added = false;
+				touched = false;
+				clear = 0;
+				levelText = 1;
+			}
+		});
+		losePop.setTitle("Too bad, You Lose!");
+		losePop.setMessage("Play Again?");
+		losePop.show();
+	}
 	public void level() {
 		
 		if(startLevel)
@@ -84,6 +106,7 @@ public class MyView  extends View {
 				levelPop.setTitle("Level "+levelText);
 				levelPop.show();
 			} catch(NullPointerException e) {
+				//Do nothing
 			}
 			startLevel = false;
 		} else {
@@ -169,6 +192,23 @@ public class MyView  extends View {
 		}
 	}
 	
+	public boolean hasLost() {
+		if(touched) {
+			iterator1 = circles.iterator();
+			while (iterator1.hasNext()) {
+				if(iterator1.next().r > Circle.littleRadius) {
+					return false;
+				}
+			} return true;
+		} return false;
+	}
+	
+	public void Lost() {
+		if (hasLost()) {
+			losePopup();
+		}
+	}
+	
 	@Override
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -176,6 +216,7 @@ public class MyView  extends View {
 		level();
 		drawCircles(canvas);
 		checkCollision(canvas);
+		Lost();
 		
 		invalidate();
 	}
