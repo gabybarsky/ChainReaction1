@@ -5,13 +5,15 @@ import java.util.Random;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 
 import com.barsky.chainreaction1.MainActivity;
 
 public class Circle {
 	Random rnd = new Random();
-	public float xPos;
-	public float yPos;
+	public float xPos, xText;
+	public float yPos, yText;
 	public float r;
 	public float xVelocity, yVelocity;
 	long score, multiplier;
@@ -23,11 +25,14 @@ public class Circle {
 	public static float littleRadius = 10;
 	public int xPlusMinus = rnd.nextInt(2);
 	public int yPlusMinus = rnd.nextInt(2);
+	public int textWidth, textHeight;
 	public static Score totalScore = new Score();
+	Paint paint = MyView.paint;
+	Rect bounds = new Rect();
 	
 	public Circle() {
 		this.xPos = rnd.nextInt(MainActivity.xmax - 15);
-		this.yPos = rnd.nextInt(MainActivity.ymax - 15);
+		this.yPos = rnd.nextInt((int) (MainActivity.ymax - 15));
 		this.xVelocity = rnd.nextFloat()*6;
 		this.yVelocity = rnd.nextFloat()*6;
 		this.r = 10;
@@ -62,13 +67,24 @@ public class Circle {
 	
 	public void drawCircle(Canvas canvas) {
 		Update();
-		MyView.paint.setColor(color);
-		canvas.drawCircle(xPos, yPos, r, MyView.paint);
+		paint.setColor(color);
+		canvas.drawCircle(xPos, yPos, r, paint);
 		if(cleared) {
-			MyView.paint.setColor(Color.BLACK);
-			String scoreStr = new DecimalFormat("#").format(score);
-			canvas.drawText("+"+scoreStr, xPos, yPos, MyView.paint);
+			paint.setColor(Color.WHITE);
+			if(score > 0) {
+				drawText(canvas);
+			}
 		}
+	}
+	
+	public void drawText(Canvas canvas) {
+		String scoreStr = "+"+new DecimalFormat("#").format(score);
+		paint.getTextBounds(scoreStr, 0, scoreStr.length(), bounds);
+		textWidth = bounds.width();
+		textHeight = bounds.height();
+		xText = xPos - (textWidth/2);
+		yText = yPos + (textHeight/2);
+		canvas.drawText(scoreStr, xText, yText, paint);
 	}
 
 	public boolean drawableCircle() {

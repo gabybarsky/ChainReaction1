@@ -12,12 +12,4 @@ public class Score {
 		gameScore += score;
 		levelBalls += 1;
 	}
-	
-	public void drawScore(float xPos, float yPos) {
-		
-	}
-	
-	public void drawBallsCleared() {
-		
-	}
 }

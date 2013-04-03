@@ -36,6 +36,8 @@ public class MyView  extends View {
 	AlertDialog levelPop = new AlertDialog.Builder(getContext()).create();
 	AlertDialog losePop = new AlertDialog.Builder(getContext()).create();
 	String message;
+	static ScoreBoard scoreBoard = new ScoreBoard();
+	public String score;
 	
 	public MyView(Context context) {
 		super(context);
@@ -68,7 +70,8 @@ public class MyView  extends View {
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
 				circles.clear();
-				for (int i=0; i<=num[level]; i++) {
+				Circle.totalScore.levelBalls = 0;
+				for (int i=0; i<num[level]; i++) {
 					circles.add(new Circle());
 				}
 			}
@@ -211,17 +214,20 @@ public class MyView  extends View {
 			canvasBlack = true;
 			losePopup();
 		} else if (canvasBlack == true ){ 
-			canvas.drawColor(Color.WHITE); 
 			canvasBlack = false; 
 		}
 	}
 	
+	public void drawBoard(Canvas canvas) {
+		scoreBoard.drawScore(canvas, Circle.totalScore);
+	}
 	@Override
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
 		level();
 		drawCircles(canvas);
+		drawBoard(canvas);
 		checkCollision(canvas);
 		Lost(canvas);
 		
