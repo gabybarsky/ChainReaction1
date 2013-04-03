@@ -117,7 +117,7 @@ public class Circle {
 					} else {
 						circle.score = score + 100;
 					}
-					totalScore.addToScore(score);
+					totalScore.addToScore(circle.score);
 				}
 			}
 		}

@@ -94,6 +94,7 @@ public class MyView  extends View {
 				clear = 0;
 				levelText = 1;
 				touchRadius = 60;
+				Circle.totalScore.gameScore = 0;
 			}
 		});
 		losePop.setTitle("Too bad, You Lose!");
