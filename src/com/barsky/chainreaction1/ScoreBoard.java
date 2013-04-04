@@ -1,7 +1,5 @@
 package com.barsky.chainreaction1;
 
-import java.text.DecimalFormat;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,7 +7,7 @@ import android.graphics.Rect;
 
 import com.barsky.chainreaction1.MainActivity;
 
-public class ScoreBoard {
+public class ScoreBoard extends Score{
 	Paint paint = new Paint();
 	String gameScore;
 	String levelBalls;
@@ -28,7 +26,8 @@ public class ScoreBoard {
 	}
 	
 	public void drawScore(Canvas canvas, Score score) {
-		gameScore = "Score: "+new DecimalFormat("#").format(score.gameScore);
+		gameScore = formatScore(score.gameScore);
+		gameScore = "Score: "+gameScore;
 		paint.setColor(Color.WHITE);
 		canvas.drawText(gameScore, 10, 20, paint);
 		

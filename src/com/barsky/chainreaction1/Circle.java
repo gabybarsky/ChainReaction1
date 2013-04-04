@@ -1,6 +1,5 @@
 package com.barsky.chainreaction1;
 
-import java.text.DecimalFormat;
 import java.util.Random;
 
 import android.graphics.Canvas;
@@ -78,7 +77,7 @@ public class Circle {
 	}
 	
 	public void drawText(Canvas canvas) {
-		String scoreStr = "+"+new DecimalFormat("#").format(score);
+		String scoreStr = "+"+Score.formatScore(score);
 		paint.getTextBounds(scoreStr, 0, scoreStr.length(), bounds);
 		textWidth = bounds.width();
 		textHeight = bounds.height();
@@ -111,11 +110,11 @@ public class Circle {
 					MyView.clear += 1;
 					circle.cleared = true;
 					circle.time = System.currentTimeMillis();
-					multiplier = score/100;
+					multiplier = score/10;
 					if(multiplier > 0) {
-						circle.score = score + 100 * multiplier;
+						circle.score = score + 10 * multiplier;
 					} else {
-						circle.score = score + 100;
+						circle.score = score + 10;
 					}
 					totalScore.addToScore(circle.score);
 				}

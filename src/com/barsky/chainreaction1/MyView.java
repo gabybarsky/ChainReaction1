@@ -15,29 +15,37 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 
 public class MyView  extends View {
 	public static Paint paint;
 	Path path;
 	Random rnd = new Random();
 	TouchCircle touchCircle;
-	public int level = 0;
-	public int levelText = 1;
+	public static int level = 0;
+	public static int levelText = 1;
 	public int[] num = {5,10,15,20,25,30,35,40,45,50,55,60};
 	public int[] clearLevel = {1,2,4,6,10,15,18,22,30,37,48,55};
 	public static int clear = 0;
 	public static int touchRadius = 60;
-	boolean startLevel = true;
-	boolean touched, popup, added, canvasBlack = false;
+	static boolean startLevel = true;
+	static boolean touched;
+	boolean popup;
+	static boolean added;
+	boolean canvasBlack = false;
 	ArrayList<Circle> remove = new ArrayList<Circle>();
 	ArrayList<Circle> circles = new ArrayList<Circle>();
 	Iterator<Circle> iterator1, iterator2;
 	Circle prevCircle, newCircle;
 	AlertDialog levelPop = new AlertDialog.Builder(getContext()).create();
 	AlertDialog losePop = new AlertDialog.Builder(getContext()).create();
+	AlertDialog alertName = new AlertDialog.Builder(getContext()).create();
 	String message;
 	static ScoreBoard scoreBoard = new ScoreBoard();
 	public String score;
+	String response = "";
+	String name = "";
+	final EditText input = new EditText(getContext());
 	
 	public MyView(Context context) {
 		super(context);
@@ -79,7 +87,19 @@ public class MyView  extends View {
 		popup =  true;
 	}
 	
+	public static void newGame() {
+		level = 0;
+		startLevel = true;
+		added = false;
+		touched = false;
+		clear = 0;
+		levelText = 1;
+		touchRadius = 60;
+		Circle.totalScore.gameScore = 0;
+	}
+	
 	public void losePopup() {
+		long score = Circle.totalScore.gameScore;
 		losePop.setCanceledOnTouchOutside(false);
 		losePop.setCancelable(false);
 		losePop.setButton(-1, "OK", new DialogInterface.OnClickListener() {
@@ -87,20 +107,14 @@ public class MyView  extends View {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
-				level = 0;
-				startLevel = true;
-				added = false;
-				touched = false;
-				clear = 0;
-				levelText = 1;
-				touchRadius = 60;
-				Circle.totalScore.gameScore = 0;
+				newGame();
 			}
 		});
 		losePop.setTitle("Too bad, You Lose!");
-		losePop.setMessage("Play Again?\nYour Score: "+Circle.totalScore.gameScore);
+		losePop.setMessage("Play Again?\nYour Score: "+Score.formatScore(score));
 		losePop.show();
 	}
+	
 	public void level() {
 		
 		if(startLevel)
@@ -213,7 +227,7 @@ public class MyView  extends View {
 		if (hasLost() && clear < clearLevel[level]) {
 			canvas.drawColor(Color.BLACK);
 			canvasBlack = true;
-			losePopup();
+			//losePopup();
 		} else if (canvasBlack == true ){ 
 			canvasBlack = false; 
 		}
