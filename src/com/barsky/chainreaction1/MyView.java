@@ -45,7 +45,7 @@ public class MyView  extends View {
 	public String score;
 	String response = "";
 	String name = "";
-	final EditText input = new EditText(getContext());
+	EditText input = new EditText(getContext());
 	
 	public MyView(Context context) {
 		super(context);
@@ -223,11 +223,11 @@ public class MyView  extends View {
 		} return false;
 	}
 	
-	public void Lost(Canvas canvas) {
+	public void GameOver(Canvas canvas) {
 		if (hasLost() && clear < clearLevel[level]) {
 			canvas.drawColor(Color.BLACK);
 			canvasBlack = true;
-			//losePopup();
+			losePopup();
 		} else if (canvasBlack == true ){ 
 			canvasBlack = false; 
 		}
@@ -244,7 +244,7 @@ public class MyView  extends View {
 		drawCircles(canvas);
 		drawBoard(canvas);
 		checkCollision(canvas);
-		Lost(canvas);
+		GameOver(canvas);
 		
 		invalidate();
 	}
