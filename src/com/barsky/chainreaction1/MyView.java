@@ -13,9 +13,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 public class MyView  extends View {
 	public static Paint paint;
@@ -43,9 +48,8 @@ public class MyView  extends View {
 	String message;
 	static ScoreBoard scoreBoard = new ScoreBoard();
 	public String score;
-	String response = "";
-	String name = "";
-	EditText input = new EditText(getContext());
+	public String response;
+	HighScore highscore = new HighScore(getContext());
 	
 	public MyView(Context context) {
 		super(context);
@@ -97,6 +101,28 @@ public class MyView  extends View {
 		touchRadius = 60;
 		Circle.totalScore.gameScore = 0;
 	}
+	
+	/*public void getUserName() {
+		alertName.setCancelable(false);
+		alertName.setCanceledOnTouchOutside(false);
+		alertName.setTitle("Enter Your Name");
+		final EditText input = new EditText(getContext());
+		alertName.setView(input);
+		alertName.setButton(-1, "Submit", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				while (response==null) {
+					response = input.getText().toString();
+				}
+				message = "Congratulations "+response+"! You have set a new highscore!";
+				Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+				highscore.addScore(response, Circle.totalScore.gameScore);
+				newGame();
+			}
+		});
+		alertName.show();
+	}*/
 	
 	public void losePopup() {
 		long score = Circle.totalScore.gameScore;
@@ -227,6 +253,11 @@ public class MyView  extends View {
 		if (hasLost() && clear < clearLevel[level]) {
 			canvas.drawColor(Color.BLACK);
 			canvasBlack = true;
+			/*if(highscore.inHighscore(Circle.totalScore.gameScore)) {
+				getUserName();
+			} else {
+				losePopup();
+			}*/
 			losePopup();
 		} else if (canvasBlack == true ){ 
 			canvasBlack = false; 

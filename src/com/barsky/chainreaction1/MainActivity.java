@@ -2,6 +2,7 @@ package com.barsky.chainreaction1;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.Menu;
@@ -46,6 +47,10 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		//Handle item selection
 		switch(item.getItemId()) {
+			case R.id.main_menu:
+				Intent intent = new Intent(this, MenuActivity.class);
+				startActivity(intent);
+				this.finish();
 			case R.id.new_game:
 				MyView.newGame();
 				return true;
