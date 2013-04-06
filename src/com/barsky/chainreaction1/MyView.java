@@ -8,19 +8,14 @@ import java.util.Random;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 public class MyView  extends View {
 	public static Paint paint;
@@ -50,6 +45,7 @@ public class MyView  extends View {
 	public String score;
 	public String response;
 	HighScore highscore = new HighScore(getContext());
+	Intent hsIntent = new Intent(getContext(), HighScoreActivity.class);
 	
 	public MyView(Context context) {
 		super(context);
@@ -91,7 +87,7 @@ public class MyView  extends View {
 		popup =  true;
 	}
 	
-	public static void newGame() {
+	public void newGame() {
 		level = 0;
 		startLevel = true;
 		added = false;
@@ -102,27 +98,9 @@ public class MyView  extends View {
 		Circle.totalScore.gameScore = 0;
 	}
 	
-	/*public void getUserName() {
-		alertName.setCancelable(false);
-		alertName.setCanceledOnTouchOutside(false);
-		alertName.setTitle("Enter Your Name");
-		final EditText input = new EditText(getContext());
-		alertName.setView(input);
-		alertName.setButton(-1, "Submit", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				while (response==null) {
-					response = input.getText().toString();
-				}
-				message = "Congratulations "+response+"! You have set a new highscore!";
-				Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
-				highscore.addScore(response, Circle.totalScore.gameScore);
-				newGame();
-			}
-		});
-		alertName.show();
-	}*/
+	public void getUserName() {
+		
+	}
 	
 	public void losePopup() {
 		long score = Circle.totalScore.gameScore;
@@ -254,7 +232,8 @@ public class MyView  extends View {
 			canvas.drawColor(Color.BLACK);
 			canvasBlack = true;
 			/*if(highscore.inHighscore(Circle.totalScore.gameScore)) {
-				getUserName();
+				//MainActivity.onGameOver(getContext());
+				//getContext().startActivity(hsIntent);
 			} else {
 				losePopup();
 			}*/

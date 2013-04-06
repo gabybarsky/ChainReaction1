@@ -17,14 +17,16 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		myView = new MyView(this);
 		super.onCreate(savedInstanceState);
-		setContentView(new MyView(this));
+		setContentView(myView);
 		Display display = getWindowManager().getDefaultDisplay();
 		Point point = getDisplaySize(display);
 		xmax = point.x;
 		ymax = point.y;
 	}
 
+	@SuppressWarnings("deprecation")
 	private static Point getDisplaySize(final Display display) {
 		final Point point = new Point();
 		try {
@@ -52,7 +54,7 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 				this.finish();
 			case R.id.new_game:
-				MyView.newGame();
+				myView.newGame();
 				return true;
 			case R.id.quit_game:
 				finish();

@@ -19,6 +19,7 @@ public class MenuActivity extends Activity {
 		highscore = new AlertDialog.Builder(this).create();
 		
 		final Intent playGame = new Intent(this, MainActivity.class);
+		//final Intent hsIntent = new Intent(this, HighScoreActivity.class);
 		final Button playButton = (Button) findViewById(R.id.play_menu);
 		playButton.setOnClickListener(new OnClickListener() {
 			
@@ -35,11 +36,12 @@ public class MenuActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				//start highscore page
+				//startActivity(hsIntent);
+				//finish();
 				highscore.setButton(-1, "OK", new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// do nothing
 					}
 				});
 				highscore.setTitle("High Scores Coming Soon");
