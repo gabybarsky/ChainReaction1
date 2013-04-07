@@ -10,7 +10,7 @@ public class Score {
 	static DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 	
 	public Score() {
-		gameScore = 5000000;
+		gameScore = 0;
 	}
 	
 	public void addToScore(long score) {

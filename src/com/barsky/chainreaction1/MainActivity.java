@@ -12,20 +12,28 @@ import android.view.Window;
 public class MainActivity extends Activity {
 
 	public static int xmax, ymax;
-	MyView myView;
+	static MainActivity main;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		finishHS();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		myView = new MyView(this);
 		super.onCreate(savedInstanceState);
-		setContentView(myView);
+		setContentView(new MyView(this));
 		Display display = getWindowManager().getDefaultDisplay();
 		Point point = getDisplaySize(display);
 		xmax = point.x;
 		ymax = point.y;
+		main = this;
 	}
-
+	
+	public boolean finishHS() {
+		try {
+			HighScoreActivity.hsAct.finish();
+			return true;
+		} catch (NullPointerException e) {return false;}
+	}
+	
 	@SuppressWarnings("deprecation")
 	private static Point getDisplaySize(final Display display) {
 		final Point point = new Point();
@@ -36,6 +44,12 @@ public class MainActivity extends Activity {
 			point.y = display.getHeight();
 		}
 		return point;
+	}
+	
+	@Override
+	public void onBackPressed() {
+		Intent menuIntent = new Intent(this, MenuActivity.class);
+		startActivity(menuIntent);
 	}
 	
 	@Override
@@ -53,8 +67,9 @@ public class MainActivity extends Activity {
 				Intent intent = new Intent(this, MenuActivity.class);
 				startActivity(intent);
 				this.finish();
+				return true;
 			case R.id.new_game:
-				myView.newGame();
+				MyView.newGame();
 				return true;
 			case R.id.quit_game:
 				finish();

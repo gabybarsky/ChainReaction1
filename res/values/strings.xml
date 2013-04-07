@@ -11,5 +11,6 @@
     <string name="main_menu">Main Menu</string>
     <string name="background_menu">Background Menu</string>
     <string name="title_activity_high_score">HighScoreActivity</string>
+    <string name="clearHS">Clear High Scores</string>
 
 </resources>

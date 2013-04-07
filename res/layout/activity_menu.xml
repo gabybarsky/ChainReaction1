@@ -16,14 +16,6 @@
         android:layout_centerHorizontal="true"
         android:text="@string/new_game" />
 
-    <Button
-        android:id="@+id/highscore_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/quit_menu"
-        android:layout_centerHorizontal="true"
-        android:text="@string/highscore" />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
@@ -35,11 +27,12 @@
         android:src="@drawable/main_menu_image" />
 
     <Button
-        android:id="@+id/quit_menu"
+        android:id="@+id/highscore_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/quit_game" />
+        android:layout_marginBottom="28dp"
+        android:text="@string/highscore" />
 
 </RelativeLayout>

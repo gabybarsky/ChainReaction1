@@ -16,6 +16,7 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 
 public class MyView  extends View {
 	public static Paint paint;
@@ -44,6 +45,7 @@ public class MyView  extends View {
 	static ScoreBoard scoreBoard = new ScoreBoard();
 	public String score;
 	public String response;
+	EditText input = new EditText(getContext());
 	HighScore highscore = new HighScore(getContext());
 	Intent hsIntent = new Intent(getContext(), HighScoreActivity.class);
 	
@@ -76,7 +78,6 @@ public class MyView  extends View {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
 				circles.clear();
 				Circle.totalScore.levelBalls = 0;
 				for (int i=0; i<num[level]; i++) {
@@ -87,7 +88,7 @@ public class MyView  extends View {
 		popup =  true;
 	}
 	
-	public void newGame() {
+	public static void newGame() {
 		level = 0;
 		startLevel = true;
 		added = false;
@@ -98,9 +99,23 @@ public class MyView  extends View {
 		Circle.totalScore.gameScore = 0;
 	}
 	
-	public void getUserName() {
-		
-	}
+	/*public void getUserName() {
+		alertName.setCancelable(false);
+		alertName.setCanceledOnTouchOutside(false);
+		alertName.setTitle("Enter Your Name");
+		input = new EditText(getContext());
+		alertName.setView(input);
+		//alertName.findViewById(R.id.getUserName);
+		alertName.setButton(-1, "Submit", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				response = input.getText().toString();
+				launchHS();
+			}
+		});
+		alertName.show();
+	}*/
 	
 	public void losePopup() {
 		long score = Circle.totalScore.gameScore;
@@ -110,7 +125,6 @@ public class MyView  extends View {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
 				newGame();
 			}
 		});
@@ -198,7 +212,6 @@ public class MyView  extends View {
 			iterator1 = circles.iterator();
 			while(iterator1.hasNext()) {
 				prevCircle = iterator1.next();
-				//touchCircle.collision(prevCircle);
 				iterator2 = circles.iterator();
 				while(iterator2.hasNext()) {
 					newCircle = iterator2.next();
@@ -231,13 +244,13 @@ public class MyView  extends View {
 		if (hasLost() && clear < clearLevel[level]) {
 			canvas.drawColor(Color.BLACK);
 			canvasBlack = true;
-			/*if(highscore.inHighscore(Circle.totalScore.gameScore)) {
-				//MainActivity.onGameOver(getContext());
-				//getContext().startActivity(hsIntent);
+			if(highscore.inHighscore(Circle.totalScore.gameScore)) {
+				hsIntent.putExtra("score", Circle.totalScore.gameScore);
+				getContext().startActivity(hsIntent);
+				newGame();
 			} else {
 				losePopup();
-			}*/
-			losePopup();
+			}
 		} else if (canvasBlack == true ){ 
 			canvasBlack = false; 
 		}
