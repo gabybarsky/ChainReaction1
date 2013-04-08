@@ -29,7 +29,6 @@ public class MenuActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				startActivity(playGame);
-				MyView.newGame();
 				finish();
 				return;
 			}

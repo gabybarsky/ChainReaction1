@@ -11,7 +11,7 @@ import android.view.Window;
 
 public class MainActivity extends Activity {
 
-	public static int xmax, ymax;
+	public int xmax, ymax;
 	static MainActivity main;
 	
 	@Override
@@ -19,12 +19,14 @@ public class MainActivity extends Activity {
 		finishHS();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		setContentView(new MyView(this));
+		
 		Display display = getWindowManager().getDefaultDisplay();
 		Point point = getDisplaySize(display);
 		xmax = point.x;
 		ymax = point.y;
 		main = this;
+		
+		setContentView(new MyView(this));
 	}
 	
 	public boolean finishHS() {

@@ -21,7 +21,7 @@ public class Circle {
 	public long allowedTime = 2000; // 2sec
 	public boolean cleared;
 	boolean collision;
-	public static float littleRadius = 10;
+	public static float littleRadius = MainActivity.main.xmax / 50;
 	public int xPlusMinus = rnd.nextInt(2);
 	public int yPlusMinus = rnd.nextInt(2);
 	public int textWidth, textHeight;
@@ -30,18 +30,18 @@ public class Circle {
 	Rect bounds = new Rect();
 	
 	public Circle() {
-		this.xPos = rnd.nextInt(MainActivity.xmax - 15);
-		this.yPos = rnd.nextInt((int) (MainActivity.ymax - 15));
+		this.xPos = rnd.nextInt(MainActivity.main.xmax - 15);
+		this.yPos = rnd.nextInt((int) (MainActivity.main.ymax - 15));
 		this.xVelocity = rnd.nextFloat()*6;
 		this.yVelocity = rnd.nextFloat()*6;
-		this.r = 10;
+		this.r = littleRadius;
 		this.score = 0;
 		this.color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
 		this.cleared = false;
 	
 		while (xPos-r <= 0 || yPos-r <= 0) {
-			this.xPos = rnd.nextInt(MainActivity.xmax-15);
-			this.yPos = rnd.nextInt(MainActivity.ymax-15);
+			this.xPos = rnd.nextInt(MainActivity.main.xmax-15);
+			this.yPos = rnd.nextInt(MainActivity.main.ymax-15);
 		}
 		if (xPlusMinus==1) { xVelocity = -xVelocity; }
 		if (yPlusMinus==1) { yVelocity = -yVelocity; }
@@ -52,10 +52,10 @@ public class Circle {
 		yPos = yPos + yVelocity;
 		
 		//check collision walls
-		if(xPos >= MainActivity.xmax - r || xPos <= 0 + r) {
+		if(xPos >= MainActivity.main.xmax - r || xPos <= 0 + r) {
 			xVelocity = -xVelocity;
 		}
-		if(yPos >= MainActivity.ymax - r || yPos <= 0 + r) {
+		if(yPos >= MainActivity.main.ymax - r || yPos <= 0 + r) {
 			yVelocity = -yVelocity;
 		}
 	}

@@ -28,7 +28,7 @@ public class MyView  extends View {
 	public int[] num = {5,10,15,20,25,30,35,40,45,50,55,60};
 	public int[] clearLevel = {1,2,4,6,10,15,18,22,30,37,48,55};
 	public static int clear = 0;
-	public static int touchRadius = 60;
+	public static int touchRadius;
 	static boolean startLevel = true;
 	static boolean touched;
 	boolean popup;
@@ -51,16 +51,19 @@ public class MyView  extends View {
 	
 	public MyView(Context context) {
 		super(context);
+		newGame();
 		init();
 	}
 	
 	public MyView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		newGame();
 		init();
 	}
 	
 	public MyView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		newGame();
 		init();
 	}
 	
@@ -68,7 +71,7 @@ public class MyView  extends View {
 		paint = new Paint();
 		paint.setStrokeWidth(10);
 		paint.setStyle(Paint.Style.FILL);
-		paint.setTextSize(20);
+		paint.setTextSize(MainActivity.main.xmax / 26);
 	}
 	
 	public void popup() {
@@ -95,7 +98,7 @@ public class MyView  extends View {
 		touched = false;
 		clear = 0;
 		levelText = 1;
-		touchRadius = 60;
+		touchRadius = (MainActivity.main.xmax / 26)*3;
 		Circle.totalScore.gameScore = 0;
 	}
 	
