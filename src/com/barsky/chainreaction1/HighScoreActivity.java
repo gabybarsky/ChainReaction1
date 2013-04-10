@@ -2,7 +2,6 @@ package com.barsky.chainreaction1;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class HighScoreActivity extends Activity {
-	static AlertDialog alertName;
 	public static String response;
 	public static String message;
 	public static HighScore highscore;
@@ -21,23 +19,25 @@ public class HighScoreActivity extends Activity {
 	TextView textArea;
 	String highscores = "";
 	static HighScoreActivity hsAct;
+	String scoreStr;
+	boolean clear = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
+		highscore = new HighScore(this);
 		finishGame();
 		super.onCreate(savedInstanceState);
 		hsAct = this;
 		setContentView(R.layout.activity_high_score);
-		alertName  = new AlertDialog.Builder(this).create();
-		highscore = new HighScore(this);
 		
 		if(highscore.inHighscore(score) && scoreAdded == false) {
 			onGameOver();
 			scoreAdded = true;
 		}
 		
-		printHS(textArea);
+		textArea = (TextView) findViewById(R.id.textArea);
+		printHS(clear);
 		
 	}
 
@@ -47,11 +47,13 @@ public class HighScoreActivity extends Activity {
 			Intent intent = getIntent();
 			score = intent.getExtras().getLong("score");
 			return true;
-		} catch (NullPointerException e) {return false;}
+		} catch (NullPointerException e) {
+			return false;
+			}
 	}
 	
 	public void onGameOver() {
-		message = "Congratulations! You have set a new highscore!";
+		message = "Congratulations! You have set a new highscore of " + Score.formatScore(score) + "!";
 		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 		highscore.addScore(score);
 		score = 0;
@@ -64,11 +66,22 @@ public class HighScoreActivity extends Activity {
 		startActivity(menuIntent);
 	}
 	
-	public void printHS(TextView textArea) {
-		textArea = (TextView) findViewById(R.id.textArea);
+	public void printHS(boolean clr) {
+		if(clr == true) {
+			textArea.setText("");
+			highscore.clearHighScores();
+			highscores = "";
+		}
+		
 		for (int i=0;i<10;i++) {
 			int num = i+1;
-			String scoreStr = Score.formatScore(highscore.getScore(i));
+			
+			if (highscore.getScore(i) == 0 || clr == true) {
+				scoreStr = "---";
+			} else {
+				scoreStr = Score.formatScore(highscore.getScore(i));
+			}
+			
 			highscores = highscores + num + ". " + scoreStr + "\n";
 		}
 		textArea.setText(highscores);
@@ -87,9 +100,8 @@ public class HighScoreActivity extends Activity {
 			case R.id.clear:
 				message = "All High Scores Cleared";
 				Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-				highscore.clearHighScores();
-				highscores = "";
-				this.printHS(textArea);
+				clear = true;
+				printHS(clear);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

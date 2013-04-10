@@ -40,7 +40,6 @@ public class MyView  extends View {
 	Circle prevCircle, newCircle;
 	AlertDialog levelPop = new AlertDialog.Builder(getContext()).create();
 	AlertDialog losePop = new AlertDialog.Builder(getContext()).create();
-	AlertDialog alertName = new AlertDialog.Builder(getContext()).create();
 	String message;
 	static ScoreBoard scoreBoard = new ScoreBoard();
 	public String score;
@@ -101,24 +100,6 @@ public class MyView  extends View {
 		touchRadius = (MainActivity.main.xmax / 26)*3;
 		Circle.totalScore.gameScore = 0;
 	}
-	
-	/*public void getUserName() {
-		alertName.setCancelable(false);
-		alertName.setCanceledOnTouchOutside(false);
-		alertName.setTitle("Enter Your Name");
-		input = new EditText(getContext());
-		alertName.setView(input);
-		//alertName.findViewById(R.id.getUserName);
-		alertName.setButton(-1, "Submit", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				response = input.getText().toString();
-				launchHS();
-			}
-		});
-		alertName.show();
-	}*/
 	
 	public void losePopup() {
 		long score = Circle.totalScore.gameScore;

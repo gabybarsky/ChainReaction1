@@ -43,6 +43,11 @@ public class Circle {
 			this.xPos = rnd.nextInt(MainActivity.main.xmax-15);
 			this.yPos = rnd.nextInt(MainActivity.main.ymax-15);
 		}
+		
+		while (xVelocity <= 0.6 || yVelocity <= 0.6) {
+			this.xVelocity = rnd.nextFloat()*6;
+			this.yVelocity = rnd.nextFloat()*6;
+		}
 		if (xPlusMinus==1) { xVelocity = -xVelocity; }
 		if (yPlusMinus==1) { yVelocity = -yVelocity; }
 	}

@@ -43,14 +43,6 @@ public class MenuActivity extends Activity {
 				startActivity(hsIntent);
 				finish();
 				return;
-				/*highscore.setButton(-1, "OK", new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-					}
-				});
-				highscore.setTitle("High Scores Coming Soon");
-				highscore.show();*/
 			}
 		});
 	}

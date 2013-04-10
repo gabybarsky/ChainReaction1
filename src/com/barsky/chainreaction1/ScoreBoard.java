@@ -31,8 +31,6 @@ public class ScoreBoard extends Score{
 		gameScore = "Score: "+gameScore;
 		canvas.drawText(gameScore, 10, 20, paint);
 		
-		canvas.drawText(Integer.toString(MyView.touchRadius), 10, 50, paint);
-		canvas.drawText(Float.toString(Circle.littleRadius), 10, 70, paint);
 		levelBalls = Integer.toString(score.levelBalls)+" balls expanded";
 		paint.getTextBounds(levelBalls, 0, levelBalls.length(), bounds);
 		textWidth = bounds.width() + 10;
