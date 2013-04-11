@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.barsky.chainreaction1.MainActivity;
+import com.swarmconnect.SwarmAchievement;
 
 public class Circle {
 	Random rnd = new Random();
@@ -99,6 +100,20 @@ public class Circle {
 		return true;
 	}
 	
+	public boolean achievements(long score) {
+		if (score >= 10000000) { //10,000,000 on a ball
+			SwarmAchievement.unlock(12321);
+			return true;
+		} else if (score >= 1000000) { //1,000,000 on a ball
+			SwarmAchievement.unlock(12319);
+			return true;
+		} else if (score >= 100000) { //100,000 on a ball
+			SwarmAchievement.unlock(12317);
+			return true;
+		}
+		return false;
+	}
+	
 	//check collision with little circles
 	public void collision(Circle circle) {
 		if (r > littleRadius) {
@@ -121,6 +136,7 @@ public class Circle {
 					} else {
 						circle.score = score + 10;
 					}
+					achievements(circle.score);
 					totalScore.addToScore(circle.score);
 				}
 			}

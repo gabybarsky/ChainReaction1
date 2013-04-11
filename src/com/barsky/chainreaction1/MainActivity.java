@@ -1,7 +1,9 @@
 package com.barsky.chainreaction1;
 
+import com.swarmconnect.Swarm;
+import com.swarmconnect.SwarmActivity;
+
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.view.Display;
@@ -9,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 
-public class MainActivity extends Activity {
+public class MainActivity extends SwarmActivity {
 
 	public int xmax, ymax;
 	static MainActivity main;
@@ -19,6 +21,7 @@ public class MainActivity extends Activity {
 		finishHS();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
+		Swarm.init(this, 5463, "82fa3ee1a45d51300bdb5ed15a09d90f");
 		
 		Display display = getWindowManager().getDefaultDisplay();
 		Point point = getDisplaySize(display);
@@ -72,9 +75,6 @@ public class MainActivity extends Activity {
 				return true;
 			case R.id.new_game:
 				MyView.newGame();
-				return true;
-			case R.id.quit_game:
-				finish();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

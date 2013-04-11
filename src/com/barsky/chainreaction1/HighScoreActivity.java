@@ -1,21 +1,25 @@
 package com.barsky.chainreaction1;
 
+import com.swarmconnect.Swarm;
+import com.swarmconnect.SwarmActivity;
+
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class HighScoreActivity extends Activity {
+public class HighScoreActivity extends SwarmActivity {
 	public static String response;
 	public static String message;
 	public static HighScore highscore;
 	static EditText input;
 	boolean scoreAdded = false;
 	static long score;
+	long pastScore;
 	TextView textArea;
 	String highscores = "";
 	static HighScoreActivity hsAct;
@@ -30,6 +34,7 @@ public class HighScoreActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		hsAct = this;
 		setContentView(R.layout.activity_high_score);
+		Swarm.init(this, 5463, "82fa3ee1a45d51300bdb5ed15a09d90f");
 		
 		if(highscore.inHighscore(score) && scoreAdded == false) {
 			onGameOver();
@@ -56,6 +61,7 @@ public class HighScoreActivity extends Activity {
 		message = "Congratulations! You have set a new highscore of " + Score.formatScore(score) + "!";
 		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 		highscore.addScore(score);
+		pastScore = score;
 		score = 0;
 		
 	}
@@ -82,9 +88,15 @@ public class HighScoreActivity extends Activity {
 				scoreStr = Score.formatScore(highscore.getScore(i));
 			}
 			
-			highscores = highscores + num + ". " + scoreStr + "\n";
+			if (highscore.getScore(i) == pastScore && highscore.getScore(i) != 0) {
+				highscores = "<font color=#FF0000>"+ num + ". " + scoreStr + "</font>"; //make it red
+				textArea.append(Html.fromHtml(highscores));
+				textArea.append("\n");
+			} else {
+				highscores = num + ". " + scoreStr + "\n";
+				textArea.append(highscores);
+			}
 		}
-		textArea.setText(highscores);
 	}
 	
 	@Override

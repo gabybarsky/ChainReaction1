@@ -8,14 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MenuActivity" >
 
-     <Button
-        android:id="@+id/play_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/highscore_menu"
-        android:layout_centerHorizontal="true"
-        android:text="@string/new_game" />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
@@ -30,9 +22,33 @@
         android:id="@+id/highscore_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="28dp"
-        android:text="@string/highscore" />
+        android:layout_alignLeft="@+id/leader_button"
+        android:layout_below="@+id/leader_button"
+        android:text="@string/highscore_menu" />
+
+    <Button
+        android:id="@+id/leader_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/imageView1"
+        android:layout_below="@+id/imageView1"
+        android:text="@string/leaderboard" />
+
+    <Button
+        android:id="@+id/play_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/achieve_button"
+        android:layout_below="@+id/imageView1"
+        android:text="@string/new_game" />
+
+    <Button
+        android:id="@+id/achieve_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/highscore_menu"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_marginLeft="14dp"
+        android:text="@string/achievements" />
 
 </RelativeLayout>

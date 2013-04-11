@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
+import com.swarmconnect.SwarmAchievement;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,6 +35,7 @@ public class MyView  extends View {
 	static boolean touched;
 	boolean popup;
 	static boolean added;
+	boolean gameOver = false;
 	boolean canvasBlack = false;
 	ArrayList<Circle> remove = new ArrayList<Circle>();
 	ArrayList<Circle> circles = new ArrayList<Circle>();
@@ -126,13 +129,18 @@ public class MyView  extends View {
 				if (!popup) { popup(); }
 				levelPop.setMessage(message);
 				levelPop.setTitle("Level "+levelText);
-				levelPop.show();
+				if(!gameOver) {
+					levelPop.show();
+				}
 			} catch(NullPointerException e) {
 				//Do nothing
 			}
 			startLevel = false;
 		} else {
 			if(clear >= clearLevel[level] && hasLost()) {
+				if (clear == num[level]) { // cleared all balls
+					SwarmAchievement.unlock(12323);
+				}
 				startLevel = true;
 				added = false;
 				touched = false;
@@ -230,8 +238,9 @@ public class MyView  extends View {
 			canvasBlack = true;
 			if(highscore.inHighscore(Circle.totalScore.gameScore)) {
 				hsIntent.putExtra("score", Circle.totalScore.gameScore);
-				getContext().startActivity(hsIntent);
+				gameOver = true;
 				newGame();
+				getContext().startActivity(hsIntent);
 			} else {
 				losePopup();
 			}
@@ -243,6 +252,27 @@ public class MyView  extends View {
 	public void drawBoard(Canvas canvas) {
 		scoreBoard.drawScore(canvas, Circle.totalScore);
 	}
+	
+	public boolean achievements() {
+		if (levelText == 2) {  //second level
+			SwarmAchievement.unlock(12293);
+			return true;
+		} else if (levelText == 13) { //first lap
+			SwarmAchievement.unlock(12295);
+			return true;
+		} else if (levelText == 26) { //second lap
+			SwarmAchievement.unlock(12297);
+			return true;
+		} else if (levelText == 39) { //third lap
+			SwarmAchievement.unlock(12299);
+			return true;
+		} else if (levelText == 65) { //fifth lap
+			SwarmAchievement.unlock(12301);
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -252,6 +282,7 @@ public class MyView  extends View {
 		drawBoard(canvas);
 		checkCollision(canvas);
 		GameOver(canvas);
+		achievements();
 		
 		invalidate();
 	}

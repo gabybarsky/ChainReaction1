@@ -1,14 +1,17 @@
 package com.barsky.chainreaction1;
 
+import com.swarmconnect.Swarm;
+import com.swarmconnect.SwarmActivity;
+import com.swarmconnect.SwarmLeaderboard;
+
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.content.Intent;
 
-public class MenuActivity extends Activity {
+public class MenuActivity extends SwarmActivity {
 	AlertDialog highscore;
 	
 	@Override
@@ -18,6 +21,7 @@ public class MenuActivity extends Activity {
 		finishGame();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu);
+		Swarm.init(this, 5463, "82fa3ee1a45d51300bdb5ed15a09d90f");
 		highscore = new AlertDialog.Builder(this).create();
 		
 		final Intent playGame = new Intent(this, MainActivity.class);
@@ -44,6 +48,26 @@ public class MenuActivity extends Activity {
 				finish();
 				return;
 			}
+		});
+		
+		final Button leaderBoardButton = (Button) findViewById(R.id.leader_button);
+		leaderBoardButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				SwarmLeaderboard.showLeaderboard(8357);
+			}
+			
+		});
+		
+		final Button achieveButton = (Button) findViewById(R.id.achieve_button);
+		achieveButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Swarm.showAchievements();
+			}
+			
 		});
 	}
 	

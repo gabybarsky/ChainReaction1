@@ -6,11 +6,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="new_game">New Game</string>
     <string name="quit_game">Quit</string>
-    <string name="highscore">HighScores</string>
+    <string name="highscore_menu">Local HighScores</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="main_menu">Main Menu</string>
     <string name="background_menu">Background Menu</string>
     <string name="title_activity_high_score">HighScoreActivity</string>
     <string name="clearHS">Clear High Scores</string>
+    <string name="highscore">HighScores</string>
 
 </resources>
