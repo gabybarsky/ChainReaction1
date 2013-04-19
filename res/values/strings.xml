@@ -4,7 +4,7 @@
     <string name="app_name">Chain Reaction</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="new_game">New Game</string>
+    <string name="new_game">Classic Mode</string>
     <string name="quit_game">Quit</string>
     <string name="highscore_menu">Local HighScores</string>
     <string name="title_activity_menu">MenuActivity</string>
@@ -13,5 +13,9 @@
     <string name="title_activity_high_score">HighScoreActivity</string>
     <string name="clearHS">Clear High Scores</string>
     <string name="highscore">HighScores</string>
+    <string name="play_arcade">Arcade Mode</string>
+    <string name="title_activity_arcade">ArcadeActivity</string>
+    <string name="classicHS">Classic HS</string>
+    <string name="arcadeHS">Arcade HS</string>
 
 </resources>

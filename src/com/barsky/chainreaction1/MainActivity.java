@@ -1,14 +1,11 @@
 package com.barsky.chainreaction1;
 
-import com.swarmconnect.Swarm;
 import com.swarmconnect.SwarmActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
 import android.graphics.Point;
 import android.view.Display;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.Window;
 
 public class MainActivity extends SwarmActivity {
@@ -21,7 +18,8 @@ public class MainActivity extends SwarmActivity {
 		finishHS();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		Swarm.init(this, 5463, "82fa3ee1a45d51300bdb5ed15a09d90f");
+		Intent menuIntent = getIntent();
+		int type = menuIntent.getIntExtra("type", 0);
 		
 		Display display = getWindowManager().getDefaultDisplay();
 		Point point = getDisplaySize(display);
@@ -29,7 +27,13 @@ public class MainActivity extends SwarmActivity {
 		ymax = point.y;
 		main = this;
 		
-		setContentView(new MyView(this));
+		if (type == 0) {
+			onBackPressed();
+		} else if(type == 1) {
+			setContentView(new MyView(this));
+		} else if (type == 2) {
+			setContentView(new ArcadeView(this));
+		}
 	}
 	
 	public boolean finishHS() {
@@ -57,7 +61,7 @@ public class MainActivity extends SwarmActivity {
 		startActivity(menuIntent);
 	}
 	
-	@Override
+	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
@@ -79,6 +83,6 @@ public class MainActivity extends SwarmActivity {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
-	}
+	}*/
 
 }

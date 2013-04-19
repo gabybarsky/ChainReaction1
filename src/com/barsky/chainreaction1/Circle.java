@@ -126,20 +126,24 @@ public class Circle {
 				circle.xVelocity = 0;
 				circle.yVelocity = 0;
 				circle.r = r;
-				if(!circle.cleared) {
-					MyView.clear += 1;
-					circle.cleared = true;
-					circle.time = System.currentTimeMillis();
-					multiplier = score/10;
-					if(multiplier > 0) {
-						circle.score = score + 10 * multiplier;
-					} else {
-						circle.score = score + 10;
-					}
-					achievements(circle.score);
-					totalScore.addToScore(circle.score);
-				}
+				this.score(circle);
 			}
+		}
+	}
+	
+	public void score(Circle circle) {
+		if(!circle.cleared) {
+			MyView.clear += 1;
+			circle.cleared = true;
+			circle.time = System.currentTimeMillis();
+			multiplier = score/10;
+			if(multiplier > 0) {
+				circle.score = score + 10 * multiplier;
+			} else {
+				circle.score = score + 10;
+			}
+			achievements(circle.score);
+			totalScore.addToScore(circle.score);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.barsky.chainreaction1;
 
-import com.swarmconnect.SwarmLeaderboard;
+//import com.swarmconnect.SwarmLeaderboard;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,9 +10,9 @@ public class HighScore {
     //private String names[];
     private long score[];
 
-    public HighScore(Context context)
+    public HighScore(Context context, String highscore)
     {
-            preferences = context.getSharedPreferences("Highscore", 0);
+            preferences = context.getSharedPreferences(highscore, 0);
             //names = new String[10];
             score = new long[10];
 
@@ -54,9 +54,9 @@ public class HighScore {
             for (position=0; position<10&&this.score[position]>score; position++);
 
             if (position==10) return false;
-            if (position==0) {
+            /*if (position==0) {
             	SwarmLeaderboard.submitScore(8357, score);
-            }
+            }*/
 
             for (int x=9; x>position; x--)
             {

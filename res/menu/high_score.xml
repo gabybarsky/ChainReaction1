@@ -3,4 +3,12 @@
     <item 
         android:id="@+id/clear" 
         android:title="@string/clearHS"></item>
+    <item 
+        android:id="@+id/classicHS" 
+        android:title="@string/classicHS"
+        android:showAsAction="ifRoom|withText"></item>
+    <item
+        android:id="@+id/arcadeHS"
+        android:title="@string/arcadeHS"
+        android:showAsAction="ifRoom|withText" ></item>
 </menu>

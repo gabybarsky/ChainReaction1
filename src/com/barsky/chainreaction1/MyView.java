@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 import com.swarmconnect.SwarmAchievement;
+import com.swarmconnect.SwarmLeaderboard;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -35,7 +36,7 @@ public class MyView  extends View {
 	static boolean touched;
 	boolean popup;
 	static boolean added;
-	boolean gameOver = false;
+	boolean submitted, gameOver = false;
 	boolean canvasBlack = false;
 	ArrayList<Circle> remove = new ArrayList<Circle>();
 	ArrayList<Circle> circles = new ArrayList<Circle>();
@@ -48,7 +49,7 @@ public class MyView  extends View {
 	public String score;
 	public String response;
 	EditText input = new EditText(getContext());
-	HighScore highscore = new HighScore(getContext());
+	HighScore highscore = new HighScore(getContext(), "Highscore");
 	Intent hsIntent = new Intent(getContext(), HighScoreActivity.class);
 	
 	public MyView(Context context) {
@@ -181,7 +182,7 @@ public class MyView  extends View {
 		
 		if(touched && !added) {
 			circles.add(touchCircle);
-			added = true;;
+			added = true;
 		}
 	}
 	
@@ -236,8 +237,14 @@ public class MyView  extends View {
 		if (hasLost() && clear < clearLevel[level]) {
 			canvas.drawColor(Color.BLACK);
 			canvasBlack = true;
+			if(submitted==false) {
+				SwarmLeaderboard.submitScore(8357, Circle.totalScore.gameScore);
+				submitted = true;
+			}
+			
 			if(highscore.inHighscore(Circle.totalScore.gameScore)) {
 				hsIntent.putExtra("score", Circle.totalScore.gameScore);
+				hsIntent.putExtra("type", 0); //classic mode
 				gameOver = true;
 				newGame();
 				getContext().startActivity(hsIntent);
